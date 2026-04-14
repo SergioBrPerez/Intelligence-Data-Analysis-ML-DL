@@ -33,13 +33,15 @@ El flujo de trabajo se divide en 5 fases principales, ordenadas en carpetas secu
     * `0.0`: Exploración inicial (Business & Data Understanding).
     * `0.1`: Generación de imágenes numéricas (MNIST).
     * `0.2`: Fusión de datos y creación de tensores `.pt`.
-* 📁 **1_Preparacion_Datos:** * `1.1`: Entrenamiento de la CNN para inferencia de imágenes.
+* 📁 **1_Preparacion_Datos:**
+    * `1.1`: Entrenamiento de la CNN para inferencia de imágenes.
     * `1.2`: Inferencia y cruce de datos tabulares.
     * `1.3`: Ingeniería de características (Feature Engineering).
     * `1.4`: Limpieza de datos (Imputación y filtrado de outliers con K-Means).
 * 📁 **2_Estudio_Datos:**
     * `2.1`: Análisis subjetivo de distribuciones post-ingeniería.
-* 📁 **3_Modelado_Clasificacion:** * `3.1`: Entrenamiento inicial LightGBM (is_delayed).
+* 📁 **3_Modelado_Clasificacion:**
+    * `3.1`: Entrenamiento inicial LightGBM (is_delayed).
     * `3.2`: Optimización con Optuna y AutoML.
 * 📁 **4_Modelado_Regresion:**
     * `4.1`: Evaluación de múltiples modelos de regresión (actual_delivery_days).
