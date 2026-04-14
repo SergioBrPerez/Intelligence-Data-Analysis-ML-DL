@@ -1,59 +1,68 @@
-# Intelligence Data Analysis ML & DL
-Various ML and DL models are trained in order to analyse data intelligently. Results are compared and performance is discussed.
+# Proyecto Final: Análisis Inteligente de Datos en E-commerce 📦📊
 
-This project isn't just about training a single model; it's about building a comprehensive pipeline that leverages different Artificial Intelligence paradigms to solve a complex real-world problem. Here, we mix the best of classic machine learning with deep learning and natural language processing.
+## Descripción del Proyecto
+Este proyecto aborda un problema logístico real utilizando técnicas de Machine Learning y Deep Learning. El objetivo principal es analizar una base de datos de comercio electrónico para intentar **predecir el retraso de los pedidos** (Clasificación) y **estimar el tiempo real de envío** (Regresión). 
 
-## Technology Stack and Rationale
+Como valor añadido y para aumentar la complejidad del reto, el proyecto integra el procesamiento de imágenes, obligando al sistema a inferir características espaciales (como las provincias o estados) a partir de imágenes numéricas generadas sintéticamente mediante Redes Neuronales Convolucionales (CNN).
 
-To tackle this challenge, I am using a hybrid approach. Why settle for one technique when you can combine them for a more robust solution? Here is a breakdown of the technologies and methods used:
+## Objetivos Alcanzados
+* **Análisis Exploratorio de Datos (EDA):** Detección de patrones geográficos y logísticos.
+* **Preparación de Datos:** Limpieza de nulos, eliminación de *outliers* mediante clustering (K-Means) e ingeniería de características (volumen, temporalidad).
+* **Deep Learning:** Inferencia de datos tabulares a partir de tensores de imágenes (`.pt`) de dígitos combinados (basados en MNIST).
+* **Modelado de Clasificación:** Intento de predicción de retrasos (binario) utilizando LightGBM, Optuna y AutoML.
+* **Modelado de Regresión:** Predicción de los días reales de entrega utilizando modelos de Gradient Boosting (LGBM, CatBoost), superando ampliamente las estimaciones originales de la empresa.
 
-* **Unsupervised Learning (Data Cleaning/Anomaly Detection):** * **Tool/Algorithm:** `K-Means` (via `scikit-learn`).
-  * **The Why:** Real-world data is messy. Before feeding data into our main classifier, I use clustering techniques like K-Means to identify underlying patterns, group similar records, and detect outliers or noisy data that might confuse the final model.
-* **Natural Language Processing (NLP for Feature Engineering):**
-  * **Tool/Algorithm:** Word Embeddings (specifically Word2Vec).
-  * **The Why:** The dataset contains short text phrases. Traditional models can't read text, so NLP techniques are used to convert these short strings into dense numerical vectors (embeddings), extracting semantic meaning that the classifier can actually understand.
-* **Supervised Learning (The Core Classifier):**
-  * **Tool/Algorithm:** `Random Forest` (or similar ensemble methods via `scikit-learn`).
-  * **The Why:** Once the data is cleaned (thanks to K-Means) and text is vectorized (thanks to NLP), we need a robust, interpretable, and powerful classifier to make the final predictions. Random Forest handles non-linear relationships and mixed data types exceptionally well.
-* **Deep Learning (Computer Vision):**
-  * **Tool/Algorithm:** Convolutional Neural Networks (CNNs) using `PyTorch`.
-  * **The Why:** A subset of the data relies on extracting numerical information directly from images. A simple yet effective Deep Learning model is built to recognize these numbers, converting unstructured image data into structured numerical features for the main pipeline.
+## Fuente de Datos
+* **Olist Dataset:** Dataset público de la empresa brasileña de e-commerce Olist, obtenido a través de [Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
+* **MNIST Dataset:** Utilizado para la generación de la base de datos de imágenes numéricas de dos dígitos (representando los códigos de estado/provincia).
 
-[cite_start]**Core Libraries:** `pandas` (data manipulation) [cite: 61][cite_start], `matplotlib`/`seaborn` (visualization) [cite: 62][cite_start], `scikit-learn` (classical ML) [cite: 62][cite_start], and `PyTorch` (Deep Learning)[cite: 63].
+## Tecnologías y Dependencias Principales
+El proyecto está desarrollado principalmente en **Python 3** (se recomienda versión 3.12).
 
----
+* **Entorno:** Jupyter Notebooks, Visual Studio Code.
+* **Manipulación y Análisis de Datos:** `pandas`, `numpy`.
+* **Machine Learning (Scikit-Learn, Optuna, AutoML):** `KMeans`, `LinearRegression`, `BayesianRidge`, `HistGradientBoosting`.
+* **Modelos de Boosting:** `LightGBM`, `XGBoost`, `CatBoost`.
+* **Deep Learning:** Entorno para el entrenamiento de la CNN y manejo de archivos `.pt` (típicamente `PyTorch`).
+* **Despliegue y Automatización:** `Docker`, `Docker Compose`, `Shell Scripting`.
 
-## Project Methodology and Execution Plan
+## Estructura del Proyecto
+El flujo de trabajo se divide en 5 fases principales, ordenadas en carpetas secuenciales:
 
-*This section outlines the detailed execution of the project, from raw data to the final selected model.*
+* 📁 **0_Exploracion_y_Generacion:** * `0.0`: Exploración inicial (Business & Data Understanding).
+    * `0.1`: Generación de imágenes numéricas (MNIST).
+    * `0.2`: Fusión de datos y creación de tensores `.pt`.
+* 📁 **1_Preparacion_Datos:** * `1.1`: Entrenamiento de la CNN para inferencia de imágenes.
+    * `1.2`: Inferencia y cruce de datos tabulares.
+    * `1.3`: Ingeniería de características (Feature Engineering).
+    * `1.4`: Limpieza de datos (Imputación y filtrado de outliers con K-Means).
+* 📁 **2_Estudio_Datos:** * `2.1`: Análisis subjetivo de distribuciones post-ingeniería.
+* 📁 **3_Modelado_Clasificacion:** * `3.1`: Entrenamiento inicial LightGBM (is_delayed).
+    * `3.2`: Optimización con Optuna y AutoML.
+* 📁 **4_Modelado_Regresion:** * `4.1`: Evaluación de múltiples modelos de regresión (actual_delivery_days).
+    * `4.2`: Ajuste final del modelo LGBM ganador.
+* 📁 **data/**: Almacenamiento de datasets en crudo y procesados.
+* 📁 **models/**: Almacenamiento de los modelos entrenados (CNN, LGBM, etc.).
 
-### 1. Project Objective & Data Source
-* [cite_start]**Context:** A high-level explanation of the real-world problem being solved[cite: 45]. 
-* [cite_start]**Data Source:** Information on where the dataset was obtained (e.g., Kaggle) and the corresponding links[cite: 44, 45].
+## Resultados Principales
+1.  **Clasificación (Predicción de Retrasos):** El modelo demostró que las características logísticas no son suficientes para predecir retrasos de manera fiable (F1-Score bajo). Se descubrió que esto se debe a que la empresa sugiere fechas de entrega artificialmente pesimistas para inflar sus métricas de éxito.
+2.  **Regresión (Predicción de Días de Entrega):** El modelo **LightGBM** logró un MAE de 4.05 días y un RMSE de 7.08 días, reduciendo el error en más de un **60%** respecto a las estimaciones legacy de la empresa (MAE: 12.92, RMSE: 15.43). Además, el modelo predice sin el sesgo profundamente pesimista del algoritmo original.
 
-### 2. Exploratory Data Analysis (EDA)
-* [cite_start]**Understanding the Data:** Descriptive statistics and initial observations[cite: 19].
-* [cite_start]**Visual Insights:** Charts and plots explaining distributions, correlations, and hidden patterns within the dataset[cite: 47, 48]. 
+## Instrucciones de Ejecución
 
-### 3. Data Preparation & Feature Engineering
-* [cite_start]**Cleaning & Transformation:** Handling missing values, encoding categorical variables, and standardizing features[cite: 22, 23, 24].
-* **Advanced Pipeline Steps:** Here is where the magic happens:
-  * Applying the K-Means logic for outlier detection/clustering.
-  * Running the NLP pipeline to generate text embeddings.
-  * Extracting digits from images using the PyTorch CNN.
+El proyecto está dockerizado para garantizar la reproducibilidad y automatizar la ejecución secuencial de todos los notebooks a través del script `run_pipeline.sh`.
 
-### 4. Evaluation Metrics
-* [cite_start]**Metric Selection:** Definition of the chosen metric (e.g., Accuracy, F1-Score, RMSE) depending on the problem[cite: 25].
-* [cite_start]**Justification:** Why this specific metric is the most appropriate for this specific business/technical problem[cite: 26, 49].
+### Requisitos Previos
+* Tener instalado [Docker](https://www.docker.com/) y Docker Compose en tu sistema.
 
-### 5. Experimentation & Modeling
-* [cite_start]**Model Training:** Testing different machine learning models and strategies[cite: 28, 50].
-* [cite_start]**Performance Comparison:** Evaluating how different algorithms perform against our chosen metric[cite: 31, 32]. 
-
-### 6. Final Model Selection & Results
-* [cite_start]**The Winner:** Presenting the best-performing model (e.g., the Random Forest classifier)[cite: 52].
-* [cite_start]**Deep Dive into Results:** Confusion matrices, ROC curves, or other relevant visualizations[cite: 32].
-* [cite_start]**Justification:** A solid explanation of *why* this model won, based entirely on the experimental data[cite: 53].
-
-### 7. Conclusions
-* [cite_start]Final thoughts, limitations encountered during the project, and potential future improvements[cite: 53].
+### Pasos para ejecutar:
+1. Clona este repositorio y navega hasta la raíz del proyecto en tu terminal.
+2. Construye la imagen de Docker:
+   ```bash
+   docker compose build
+   ```
+3. Ejecuta el pipeline completo:
+   ```bash
+   docker compose up
+   ```
+   
