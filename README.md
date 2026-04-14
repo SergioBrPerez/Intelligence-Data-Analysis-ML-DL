@@ -1,4 +1,4 @@
-# Proyecto Final: Análisis Inteligente de Datos en E-commerce 📦📊
+# Proyecto Final: Análisis Inteligente de Datos en E-commerce
 
 ## Descripción del Proyecto
 Este proyecto aborda un problema logístico real utilizando técnicas de Machine Learning y Deep Learning. El objetivo principal es analizar una base de datos de comercio electrónico para intentar **predecir el retraso de los pedidos** (Clasificación) y **estimar el tiempo real de envío** (Regresión). 
@@ -29,17 +29,20 @@ El proyecto está desarrollado principalmente en **Python 3** (se recomienda ver
 ## Estructura del Proyecto
 El flujo de trabajo se divide en 5 fases principales, ordenadas en carpetas secuenciales:
 
-* 📁 **0_Exploracion_y_Generacion:** * `0.0`: Exploración inicial (Business & Data Understanding).
+* 📁 **0_Exploracion_y_Generacion:**
+    * `0.0`: Exploración inicial (Business & Data Understanding).
     * `0.1`: Generación de imágenes numéricas (MNIST).
     * `0.2`: Fusión de datos y creación de tensores `.pt`.
 * 📁 **1_Preparacion_Datos:** * `1.1`: Entrenamiento de la CNN para inferencia de imágenes.
     * `1.2`: Inferencia y cruce de datos tabulares.
     * `1.3`: Ingeniería de características (Feature Engineering).
     * `1.4`: Limpieza de datos (Imputación y filtrado de outliers con K-Means).
-* 📁 **2_Estudio_Datos:** * `2.1`: Análisis subjetivo de distribuciones post-ingeniería.
+* 📁 **2_Estudio_Datos:**
+    * `2.1`: Análisis subjetivo de distribuciones post-ingeniería.
 * 📁 **3_Modelado_Clasificacion:** * `3.1`: Entrenamiento inicial LightGBM (is_delayed).
     * `3.2`: Optimización con Optuna y AutoML.
-* 📁 **4_Modelado_Regresion:** * `4.1`: Evaluación de múltiples modelos de regresión (actual_delivery_days).
+* 📁 **4_Modelado_Regresion:**
+    * `4.1`: Evaluación de múltiples modelos de regresión (actual_delivery_days).
     * `4.2`: Ajuste final del modelo LGBM ganador.
 * 📁 **data/**: Almacenamiento de datasets en crudo y procesados.
 * 📁 **models/**: Almacenamiento de los modelos entrenados (CNN, LGBM, etc.).
