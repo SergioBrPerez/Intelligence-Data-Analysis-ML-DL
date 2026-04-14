@@ -21,13 +21,13 @@ NOTEBOOKS=(
 
 # 2. Loop through each notebook and execute it
 for nb in "${NOTEBOOKS[@]}"; do
-    # Extract just the filename for a cleaner print statement
     nb_name=$(basename "$nb")
     
     echo "--- 🏃 Executing: $nb_name ---"
     
-    # Run the notebook. If it fails, print an error and stop the whole script.
-    if jupyter nbconvert --to notebook --execute --inplace "$nb"; then
+    # papermill ejecuta el notebook, lo guarda sobre sí mismo ("$nb" "$nb")
+    # y la bandera --log-output escupe todos los print() a la terminal.
+    if papermill "$nb" "$nb" --log-output; then
         echo "--- ✅ Success ---"
         echo ""
     else

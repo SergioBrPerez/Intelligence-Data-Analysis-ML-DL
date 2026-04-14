@@ -5,5 +5,6 @@ services:
     volumes:
       - ./:/home/jovyan/work
     working_dir: /home/jovyan/work
-    # The command to execute when the container starts
+    environment:
+      - PYTHONUNBUFFERED=1   # <--- Forzar a Docker a mostrar logs en tiempo real
     command: bash run_pipeline.sh
