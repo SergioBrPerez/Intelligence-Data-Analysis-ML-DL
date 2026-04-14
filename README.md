@@ -65,7 +65,7 @@ The project is dockerized to ensure reproducibility and automate the sequential 
 2. Build the Docker image:
    ```bash
    docker compose build
-   ``
+   ```
 3. Run the complete pipeline:
    ```bash
    docker compose up
