@@ -1,13 +1,20 @@
+# Data Acquisition & Manipulation
 kagglehub
 pandas
 
+# Machine Learning & Optimization
+lightgbm
+xgboost
+catboost
+optuna
+flaml
+
+# Deep Learning Frameworks
 torch
 torchvision
 
-lightgbm
-optuna
-flaml
-xgboost
-catboost
-
+# Notebook Orchestration & Export
 papermill
+nbformat
+nbconvert
+ipywidgets

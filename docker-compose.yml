@@ -1,10 +1,9 @@
 services:
   pipeline:
     build: .
-    # This maps your Mac's current folder to the container's working folder
     volumes:
       - ./:/home/jovyan/work
     working_dir: /home/jovyan/work
     environment:
-      - PYTHONUNBUFFERED=1   # <--- Forzar a Docker a mostrar logs en tiempo real
+      - PYTHONUNBUFFERED=1
     command: bash run_pipeline.sh
