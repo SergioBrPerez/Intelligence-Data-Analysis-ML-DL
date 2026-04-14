@@ -1,0 +1,9 @@
+services:
+  pipeline:
+    build: .
+    # This maps your Mac's current folder to the container's working folder
+    volumes:
+      - ./:/home/jovyan/work
+    working_dir: /home/jovyan/work
+    # The command to execute when the container starts
+    command: bash run_pipeline.sh
