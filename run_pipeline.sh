@@ -20,6 +20,7 @@ NOTEBOOKS=(
     "3-Clasification_Model/3.2-Hyperparam_Optimization_SBP.ipynb"
     "4-Regresion_Model/4.1-Multi_Model_Comparison_SBP.ipynb"
     "4-Regresion_Model/4.2-Training_and_Evaluation_SBP.ipynb"
+    "5-Feature_Importance/5.1-Feature_Importance_Evaluation_SBP.ipynb"
 )
 
 echo "Starting pipeline execution..."
