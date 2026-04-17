@@ -29,23 +29,25 @@ The project is mainly developed in **Python 3** (version 3.12 recommended).
 ## Project Structure
 The workflow is divided into 5 main phases, organized in sequential folders:
 
-* 📁 **0_Exploracion_y_Generacion:**
+* 📁 **0-Data_Generation:**
     * `0.0`: **Initial exploration (Business & Data Understanding).** Analyzes data types, nulls, and geographical distributions. Identifies that most sellers are concentrated in big cities and establishes the hypothesis that delays correlate with long distances or remote areas like the Amazon.
     * `0.1`: **Generation of numerical images (MNIST).** Creates a synthetic dataset of two-digit images (fused from MNIST) representing state codes. This step artificially increases the project's technical complexity.
     * `0.2`: **Data merging and creation of `.pt` tensors.** Replaces textual state labels with numerical codes (0-27). Integrates order data with the newly generated state images, saving them into PyTorch tensors (`.pt`) for customers and sellers, alongside a base tabular dataset.
-* 📁 **1_Preparacion_Datos:**
+* 📁 **1-ETL_Integration:**
     * `1.1`: **CNN training for image inference.** Trains a Convolutional Neural Network from scratch to accurately recognize the synthetic two-digit state images generated in the previous phase.
     * `1.2`: **Inference and cross-referencing of tabular data.** Uses the trained CNN to infer the numerical state codes from the `.pt` image tensors, merging this predicted data back into the main tabular database for future training.
     * `1.3`: **Feature Engineering.** Defines target variables (a boolean for delays and a continuous variable for delivery days). Generates new features like product volume, order seasonality (day/month), and an out-of-province flag. Removes post-order variables (like customer reviews) to prevent data leakage.
     * `1.4`: **Data cleaning.** Imputes minor null values using the median. Addresses outliers using a multidimensional K-Means clustering approach (defining 5 clusters and filtering the 99th percentile), which safely removes about 3.8% of the most extreme anomalous records.
-* 📁 **2_Estudio_Datos:**
+* 📁 **2-Intelligence:**
     * `2.1`: **Subjective analysis of post-engineering distributions.** Analyzes the cleaned dataset, revealing that over 90% of orders are not delayed. It highlights that the company's estimated delivery dates are heavily and artificially pessimistic, and observes geographical shipment patterns (e.g., most shipments are intra-province, highest density in Sao Paulo).
-* 📁 **3_Modelado_Clasificacion:**
+* 📁 **3-Clasification_Model:**
     * `3.1`: **Initial LightGBM training (is_delayed).** First attempt to predict binary delays based on logistical features. Yields a misleadingly high accuracy (>90%) due to class imbalance, but a low F1-Score (~0.41), exposing the model's struggle to reliably catch true delays.
     * `3.2`: **Optimization with Optuna and AutoML.** Attempts to boost the F1-Score using hyperparameter optimization (Optuna) and AutoML frameworks. The failure to secure significant improvements leads to the conclusion that logistical features cannot predict the inconsistent, artificially pessimistic delay metrics set by the company.
-* 📁 **4_Modelado_Regresion:**
+* 📁 **4-Regression_Model:**
     * `4.1`: **Evaluation of multiple regression models (actual_delivery_days).** Pivots the project scope to predict the *actual* number of delivery days. Benchmarks several models (Linear, Ridge, LGBM, XGBoost, CatBoost), finding that all of them, particularly CatBoost and LGBM, vastly outperform the company's legacy estimates.
     * `4.2`: **Final tuning of the winning LGBM model.** Fine-tunes the LightGBM model with stricter hyperparameters. Achieves a Mean Absolute Error (MAE) of 4.05 days (compared to the company's 12.92 days). The model centers its error around zero, successfully removing the extreme pessimistic bias of the legacy algorithm and closely mirroring real delivery behavior.
+* 📁 **5-Feature_Importance:**
+    * `5.1`: **Feature Importance Evaluation.** loads pre-trained LightGBM classification and regression models from disk and analyzes their feature importance. It visualizes how each input variable contributes to the models’ decisions, helping interpret and compare their behavior. 
 
 ## Main Results
 1.  **Classification (Delay Prediction):** The model demonstrated that logistical features are not sufficient to reliably predict delays (low F1-Score). It was discovered that this is because the company suggests artificially pessimistic delivery dates to inflate their success metrics.
